@@ -8,7 +8,11 @@
         </q-toolbar>
         <q-card-section>
           <q-card-item>
-            <q-input label="Name" v-model="input.name"></q-input>
+            <q-input
+              label="Name"
+              v-model="input.name"
+              hint="Hotel : Harmony Inn"
+            ></q-input>
             <q-input label="Area" v-model="input.area"></q-input>
           </q-card-item>
 
@@ -24,7 +28,7 @@
       </q-card>
     </q-dialog>
 
-    <!-- Dialog Create -->
+    <!-- Dialog Edit -->
     <q-dialog v-model="dialogEdit">
       <q-card style="width: 500px">
         <q-toolbar>
@@ -32,7 +36,11 @@
         </q-toolbar>
         <q-card-section>
           <q-card-item>
-            <q-input label="Name" v-model="input.name"></q-input>
+            <q-input
+              label="Name"
+              v-model="input.name"
+              hint="Hotel : Harmony Inn"
+            ></q-input>
             <q-input label="Area" v-model="input.area"></q-input>
           </q-card-item>
 
@@ -59,10 +67,10 @@
         </q-card-section>
         <q-btn
           label="Delete"
-          class="bg-primary text-white"
+          class="bg-primary text-white q-my-md q-ml-md"
           @click="deleteData"
         ></q-btn>
-        <q-btn label="Back" v-close-popup class="q-mx-md"></q-btn>
+        <q-btn label="Back" v-close-popup class="q-mx-sm"></q-btn>
       </q-card>
     </q-dialog>
 
@@ -72,56 +80,6 @@
       @click="createDialog = true"
     ></q-btn>
 
-<<<<<<< HEAD
-          <template v-slot:header="props">
-            <q-tr :props="props">
-              <q-th
-                v-for="col in props.cols"
-                :key="col.name"
-                :props="props"
-                auto-width
-                class="wrap justify-center items-center"
-              >
-                {{ $t(`columns.${col.name}`) }}
-              </q-th>
-            </q-tr>
-          </template>
-
-          <template v-slot:body="props">
-            <q-tr :props="props">
-              <q-td class="text-center">{{ props.rowIndex + 1 }}</q-td>
-              <q-td class="text-center">{{ props.row.notes }}</q-td>
-              <q-td class="text-center">{{ props.row.created_at }}</q-td>
-              <q-td class="text-center">{{ props.row.created_by }}</q-td>
-              <q-td class="text-center">{{ props.row.status }}</q-td>
-              <q-td class="text-center">
-                <q-btn
-                  @click="openEditDialog(props.row)"
-                  color="warning"
-                  icon="edit"
-                  class="items-end"
-                >
-                  <q-tooltip class="bg-primary" :offset="[10, 10]">
-                    {{ $t('editNote') }}
-                  </q-tooltip>
-                </q-btn>
-                <q-btn
-                  @click="openDeleteDialog(props.row)"
-                  color="negative"
-                  icon="delete"
-                  class="items-end"
-                >
-                  <q-tooltip class="bg-primary" :offset="[10, 10]">
-                    {{ $t('deleteNote') }}
-                  </q-tooltip>
-                </q-btn>
-              </q-td>
-            </q-tr>
-          </template>
-        </q-table>
-      </div>
-    </div>
-=======
     <!-- Main Page -->
     <q-table :columns="columns" :rows="rows">
       <template #body="props">
@@ -135,6 +93,7 @@
               icon="edit"
               color="warning"
               @click="editDialog(props.row)"
+              class="q-mx-sm"
             ></q-btn>
             <q-btn
               icon="delete"
@@ -145,17 +104,11 @@
         </q-tr>
       </template>
     </q-table>
->>>>>>> dev
   </q-page>
 </template>
 
 <script lang="ts">
-<<<<<<< HEAD
-import { defineComponent, ref, Ref } from 'vue';
-import { date } from 'quasar';
-=======
 import { defineComponent, ref } from 'vue';
->>>>>>> dev
 import { uid } from 'quasar';
 
 // Mengvalidasi data yang di kirim
@@ -215,42 +168,13 @@ export default defineComponent({
         area: 'Jakarta Pusat',
       },
     ]);
-<<<<<<< HEAD
-    const dialogAddNotes: Ref<boolean> = ref(false);
-    const dialogEditNote = ref(false);
-    const dialogDeleteNote = ref(false);
-=======
-
->>>>>>> dev
     const input = ref({
       name: '',
       area: '',
     });
-<<<<<<< HEAD
-    const editingNote: Ref<boolean> = ref(false);
-    const editingNoteIndex = ref(-1);
-    const openAddDialog = (edit: boolean) => {
-      dialogAddNotes.value = true;
-      editingNote.value = edit;
-    };
-    const openEditDialog = (note: string) => {
-      input.value.notes = note.notes;
-      input.value.created_by = note.created_by;
-      editingNoteIndex.value = rows.value.findIndex((x) => x.no === note.no);
-      dialogEditNote.value = true;
-    };
-    const openDeleteDialog = (note) => {
-      input.value.notes = note.notes;
-      input.value.created_by = note.created_by;
-      editingNoteIndex.value = rows.value.findIndex((x) => x.no === note.no);
-      dialogDeleteNote.value = true;
-    };
-    const addNotes = () => {
-=======
 
     // Menambahkan data
     const addData = () => {
->>>>>>> dev
       rows.value.push({
         id: uid(),
         name: input.value.name,

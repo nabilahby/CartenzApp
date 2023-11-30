@@ -1,35 +1,5 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-<<<<<<< HEAD
-    <div class="bg-primary">
-      <q-header elevated>
-        <q-toolbar>
-          <q-btn
-            flat
-            dense
-            round
-            icon="menu"
-            aria-label="Menu"
-            @click="toggleLeftDrawer"
-          />
-
-          <q-toolbar-title>
-            {{ $t('title') }}
-          </q-toolbar-title>
-        </q-toolbar>
-      </q-header>
-
-      <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-        <q-list>
-          <EssentialLink
-            v-for="link in essentialLinks"
-            :key="link.title"
-            v-bind="link"
-          />
-        </q-list>
-      </q-drawer>
-    </div>
-=======
     <q-header elevated class="bg-primary">
       <q-toolbar>
         <q-btn
@@ -56,7 +26,7 @@
         />
       </q-list>
     </q-drawer>
->>>>>>> dev
+    >>>>>>> dev
 
     <q-page-container>
       <router-view />

@@ -3,14 +3,25 @@
     <q-card class="q-pa-md" style="width: 400px; max-width: 80vw">
       <div class="text-h6 text-center q-mb-md">Register Form</div>
 
-      <q-input v-model="input.username" dense outlined label="Username" />
-      <q-input v-model="input.email" dense outlined label="Email" />
-      <br />
-
+      <q-input
+        dense
+        outlined
+        v-model="input.username"
+        class="q-my-sm"
+        label="Username"
+      />
+      <q-input
+        dense
+        outlined
+        class="q-my-sm"
+        v-model="input.email"
+        label="Email"
+      />
       <q-input
         v-model="input.password"
         dense
         outlined
+        class="q-my-sm"
         type="password"
         label="Password"
       />
