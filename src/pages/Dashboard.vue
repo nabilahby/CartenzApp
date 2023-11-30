@@ -193,11 +193,11 @@
               <q-td class="text-center">
                 <q-btn
                   @click="openEditDialog(props.row)"
-                  color="primary"
+                  color="warning"
                   icon="edit"
                   class="items-end"
                 >
-                  <q-tooltip class="bg-indigo" :offset="[10, 10]">
+                  <q-tooltip class="bg-primary" :offset="[10, 10]">
                     {{ $t('editNote') }}
                   </q-tooltip>
                 </q-btn>
@@ -207,7 +207,7 @@
                   icon="delete"
                   class="items-end"
                 >
-                  <q-tooltip class="bg-indigo" :offset="[10, 10]">
+                  <q-tooltip class="bg-primary" :offset="[10, 10]">
                     {{ $t('deleteNote') }}
                   </q-tooltip>
                 </q-btn>
@@ -221,7 +221,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, Ref } from 'vue';
 import { date } from 'quasar';
 import { uid } from 'quasar';
 const timeStamp = Date.now();
@@ -260,20 +260,20 @@ export default defineComponent({
         status: 'Success',
       },
     ]);
-    const dialogAddNotes = ref(false);
+    const dialogAddNotes: Ref<boolean> = ref(false);
     const dialogEditNote = ref(false);
     const dialogDeleteNote = ref(false);
     const input = ref({
       notes: '',
       created_by: '',
     });
-    const editingNote = ref(false);
+    const editingNote: Ref<boolean> = ref(false);
     const editingNoteIndex = ref(-1);
-    const openAddDialog = (edit) => {
+    const openAddDialog = (edit: boolean) => {
       dialogAddNotes.value = true;
       editingNote.value = edit;
     };
-    const openEditDialog = (note) => {
+    const openEditDialog = (note: string) => {
       input.value.notes = note.notes;
       input.value.created_by = note.created_by;
       editingNoteIndex.value = rows.value.findIndex((x) => x.no === note.no);

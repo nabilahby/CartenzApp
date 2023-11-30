@@ -1,47 +1,33 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+  <q-layout view="hHh Lpr lFf">
+    <div class="bg-primary">
+      <q-header elevated>
+        <q-toolbar>
+          <q-btn
+            flat
+            dense
+            round
+            icon="menu"
+            aria-label="Menu"
+            @click="toggleLeftDrawer"
+          />
 
-        <q-toolbar-title>
-          {{ $t('title') }}
-        </q-toolbar-title>
+          <q-toolbar-title>
+            {{ $t('title') }}
+          </q-toolbar-title>
+        </q-toolbar>
+      </q-header>
 
-        <q-select
-          v-model="locale"
-          :options="localeOptions"
-          label="Quasar Language"
-          emit-value
-          map-options
-          options-dense
-          dark
-          :input-style="{ backgroundColor: '#ff0000' }"
-          style="min-width: 150px"
-        />
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
+      <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+        <q-list>
+          <EssentialLink
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+          />
+        </q-list>
+      </q-drawer>
+    </div>
 
     <q-page-container>
       <router-view />
