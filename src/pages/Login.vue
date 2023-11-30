@@ -17,7 +17,8 @@
         />
         <br />
 
-        <q-btn type="submit" color="primary" label="Login" />
+        <q-btn color="primary" label="Login" to="/dashboard" />
+        <q-btn label="Register" class="q-mx-sm" to="/register" />
       </q-form>
     </q-card>
   </q-page>

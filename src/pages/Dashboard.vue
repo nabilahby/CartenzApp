@@ -1,174 +1,78 @@
 <template>
-  <q-page class="row items-top justify-end">
-    <!-- Add Dialog -->
-    <q-dialog v-model="dialogAddNotes">
-      <q-card class="q-pa-md" style="width: 700px; max-width: 80vw">
-        <div class="text-weight-medium text-center" style="font-size: 30px">
-          {{ editingNote.value ? $t('editNote') : $t('addNote') }}
-        </div>
+  <q-page padding>
+    <!-- Dialog Create -->
+    <q-dialog v-model="createDialog">
+      <q-card style="width: 500px">
+        <q-toolbar>
+          <q-toolbar-title class="text-center">Create Data</q-toolbar-title>
+        </q-toolbar>
+        <q-card-section>
+          <q-card-item>
+            <q-input label="Name" v-model="input.name"></q-input>
+            <q-input label="Area" v-model="input.area"></q-input>
+          </q-card-item>
 
-        <div class="row q-mt-xl">
-          <div class="col-12 col-sm-6 col-md q-px-lg q-gutter-md">
-            <div>
-              <div>{{ $t('notesLabel') }}</div>
-              <q-input
-                dense
-                color="indigo"
-                outlined
-                v-model="input.notes"
-                lazy-rules
-                :rules="[(val) => val !== '' || $t('notesNotEmpty')]"
-              >
-                <template v-if="input.notes" v-slot:append>
-                  <q-icon
-                    name="cancel"
-                    @click.stop.prevent="input.notes = null"
-                    class="cursor-pointer"
-                  />
-                </template>
-              </q-input>
-            </div>
-            <div>
-              <div>{{ $t('createdByLabel') }}</div>
-              <q-input
-                dense
-                color="indigo"
-                outlined
-                v-model="input.created_by"
-                lazy-rules
-                :rules="[(val) => val !== '' || $t('createdByNotEmpty')]"
-              >
-                <template v-if="input.created_by" v-slot:append>
-                  <q-icon
-                    name="cancel"
-                    @click.stop.prevent="input.created_by = null"
-                    class="cursor-pointer"
-                  />
-                </template>
-              </q-input>
-            </div>
-          </div>
-        </div>
-        <div class="" style="margin-top: 20px">
-          <q-btn
-            class="full-width text-capitalize"
-            :color="editingNote.value ? 'purple' : 'indigo-7'"
-            :label="editingNote.value ? $t('editNote') : $t('addNote')"
-            @click="editingNote.value ? editNote() : addNotes()"
-          />
-        </div>
+          <q-card-item class="q-mt-md">
+            <q-btn
+              label="submit"
+              class="bg-primary text-white q-mt-xl q-mr-sm"
+              @click="addData()"
+            ></q-btn>
+            <q-btn v-close-popup label="cancel" class="q-mt-xl"></q-btn>
+          </q-card-item>
+        </q-card-section>
       </q-card>
     </q-dialog>
 
-    <!-- Edit Dialog -->
-    <q-dialog v-model="dialogEditNote">
-      <q-card class="q-pa-md" style="width: 700px; max-width: 80vw">
-        <div class="text-weight-medium text-center" style="font-size: 30px">
-          {{ $t('editNote') }}
-        </div>
+    <!-- Dialog Create -->
+    <q-dialog v-model="dialogEdit">
+      <q-card style="width: 500px">
+        <q-toolbar>
+          <q-toolbar-title class="text-center">Edit Data</q-toolbar-title>
+        </q-toolbar>
+        <q-card-section>
+          <q-card-item>
+            <q-input label="Name" v-model="input.name"></q-input>
+            <q-input label="Area" v-model="input.area"></q-input>
+          </q-card-item>
 
-        <div class="row q-mt-xl">
-          <div class="col-12 col-sm-6 col-md q-px-lg q-gutter-md">
-            <div>
-              <div>{{ $t('notesLabel') }}</div>
-              <q-input
-                dense
-                color="indigo"
-                outlined
-                v-model="input.notes"
-                lazy-rules
-                :rules="[(val) => val !== '' || $t('notesNotEmpty')]"
-              >
-                <template v-if="input.notes" v-slot:append>
-                  <q-icon
-                    name="cancel"
-                    @click.stop.prevent="input.notes = null"
-                    class="cursor-pointer"
-                  />
-                </template>
-              </q-input>
-            </div>
-            <div>
-              <div>{{ $t('createdByLabel') }}</div>
-              <q-input
-                dense
-                color="indigo"
-                outlined
-                v-model="input.created_by"
-                lazy-rules
-                :rules="[(val) => val !== '' || $t('createdByNotEmpty')]"
-              >
-                <template v-if="input.created_by" v-slot:append>
-                  <q-icon
-                    name="cancel"
-                    @click.stop.prevent="input.created_by = null"
-                    class="cursor-pointer"
-                  />
-                </template>
-              </q-input>
-            </div>
-          </div>
-        </div>
-        <div class="" style="margin-top: 20px">
-          <q-btn
-            class="full-width text-capitalize"
-            color="purple"
-            :label="$t('editNote')"
-            @click="editNote()"
-          />
-        </div>
+          <q-card-item class="q-mt-md">
+            <q-btn
+              label="submit"
+              class="bg-primary text-white q-mt-xl q-mr-sm"
+              @click="editData()"
+            ></q-btn>
+            <q-btn v-close-popup label="cancel" class="q-mt-xl"></q-btn>
+          </q-card-item>
+        </q-card-section>
       </q-card>
     </q-dialog>
 
     <!-- Delete Dialog -->
-    <q-dialog v-model="dialogDeleteNote">
-      <q-card class="q-pa-md" style="width: 700px; max-width: 80vw">
-        <div class="text-weight-medium text-center" style="font-size: 30px">
-          {{ $t('deleteNote') }}
-        </div>
-
-        <div class="row q-mt-xl">
-          <div class="col q-px-lg">
-            <div>
-              <p>
-                {{ $t('confirmDeleteNote') }}: <strong>{{ input.notes }}</strong
-                >?
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="" style="margin-top: 20px">
-          <q-btn
-            class="full-width text-capitalize"
-            color="negative"
-            :label="$t('deleteNote')"
-            @click="deleteNote()"
-          />
-        </div>
+    <q-dialog v-model="dialogDelete">
+      <q-card style="width: 500px">
+        <q-toolbar>
+          <q-toolbar-title class="text-center">Are you sure???</q-toolbar-title>
+        </q-toolbar>
+        <q-card-section class="text-center">
+          <q-card-label> Are you sure this data will be deleted? </q-card-label>
+        </q-card-section>
+        <q-btn
+          label="Delete"
+          class="bg-primary text-white"
+          @click="deleteData"
+        ></q-btn>
+        <q-btn label="Back" v-close-popup class="q-mx-md"></q-btn>
       </q-card>
     </q-dialog>
 
-    <!-- Main Content -->
-    <div class="col justify-end">
-      <div class="row q-pa-lg justify-start q-gutter-lg">
-        <q-table
-          :rows="rows"
-          :columns="columns"
-          row-key="no"
-          style="width: 100%"
-        >
-          <template v-slot:top>
-            <div class="fit row justify-end q-gutter-sm">
-              <q-btn
-                @click="openAddDialog(false)"
-                color="primary"
-                icon="add"
-                :label="$t('addNotes')"
-                class="items-end"
-              />
-            </div>
-          </template>
+    <q-btn
+      label="Create Data"
+      class="bg-primary text-white q-my-md"
+      @click="createDialog = true"
+    ></q-btn>
 
+<<<<<<< HEAD
           <template v-slot:header="props">
             <q-tr :props="props">
               <q-th
@@ -217,56 +121,112 @@
         </q-table>
       </div>
     </div>
+=======
+    <!-- Main Page -->
+    <q-table :columns="columns" :rows="rows">
+      <template #body="props">
+        <q-tr :props="props">
+          <q-td class="text-center">{{ props.rowIndex + 1 }}</q-td>
+          <q-td>{{ props.row.name }}</q-td>
+          <q-td>{{ props.row.area }}</q-td>
+          <q-td>
+            <!-- Button Main Page -->
+            <q-btn
+              icon="edit"
+              color="warning"
+              @click="editDialog(props.row)"
+            ></q-btn>
+            <q-btn
+              icon="delete"
+              color="negative"
+              @click="deleteDialog(props.row)"
+            ></q-btn>
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
+>>>>>>> dev
   </q-page>
 </template>
 
 <script lang="ts">
+<<<<<<< HEAD
 import { defineComponent, ref, Ref } from 'vue';
 import { date } from 'quasar';
+=======
+import { defineComponent, ref } from 'vue';
+>>>>>>> dev
 import { uid } from 'quasar';
-const timeStamp = Date.now();
-const columns = [
-  {
-    name: 'no',
-    field: 'no',
-    label: 'No',
-    align: 'center',
-  },
-  { name: 'notes', label: 'Notes', field: 'notes', align: 'center' },
-  {
-    name: 'created_at',
-    label: 'Created At',
-    field: 'created_at',
-    align: 'center',
-  },
-  {
-    name: 'created_by',
-    label: 'Created By',
-    field: 'created_by',
-    align: 'center',
-  },
-  { name: 'status', label: 'Notes Status', field: 'status', align: 'center' },
-  { name: 'action', label: 'Action', field: 'action', align: 'center' },
-];
+
+// Mengvalidasi data yang di kirim
+interface tableType {
+  name: string;
+  label: string;
+  field: string;
+  align: 'center' | 'left' | 'right';
+}
+
+interface dataType {
+  id?: string;
+  name: string;
+  area: string;
+}
+
 export default defineComponent({
   name: 'DashboardTodo',
   setup() {
+    const createDialog = ref(false);
+    const dialogEdit = ref(false);
+    const dialogDelete = ref(false);
+
+    const dataTable = ref(-1);
+
+    const columns: tableType[] = [
+      {
+        name: 'id',
+        label: 'ID',
+        field: 'id',
+        align: 'center',
+      },
+      {
+        name: 'name',
+        label: 'NAME',
+        field: 'name',
+        align: 'left',
+      },
+      {
+        name: 'area',
+        label: 'AREA',
+        field: 'area',
+        align: 'left',
+      },
+      {
+        name: 'action',
+        label: 'ACTION',
+        field: 'action',
+        align: 'left',
+      },
+    ];
+
     const rows = ref([
       {
-        no: uid(),
-        notes: 'Test',
-        created_at: '2023-11-14',
-        created_by: 'Deni Rudiana',
-        status: 'Success',
+        id: uid(),
+        name: 'Hotel Rawasari',
+        area: 'Jakarta Pusat',
       },
     ]);
+<<<<<<< HEAD
     const dialogAddNotes: Ref<boolean> = ref(false);
     const dialogEditNote = ref(false);
     const dialogDeleteNote = ref(false);
+=======
+
+>>>>>>> dev
     const input = ref({
-      notes: '',
-      created_by: '',
+      name: '',
+      area: '',
     });
+<<<<<<< HEAD
     const editingNote: Ref<boolean> = ref(false);
     const editingNoteIndex = ref(-1);
     const openAddDialog = (edit: boolean) => {
@@ -286,48 +246,65 @@ export default defineComponent({
       dialogDeleteNote.value = true;
     };
     const addNotes = () => {
+=======
+
+    // Menambahkan data
+    const addData = () => {
+>>>>>>> dev
       rows.value.push({
-        no: uid(),
-        notes: input.value.notes,
-        created_at: date.formatDate(timeStamp, 'YYYY-MM-DD'),
-        created_by: input.value.created_by,
-        status: 'Success',
+        id: uid(),
+        name: input.value.name,
+        area: input.value.area,
       });
-      dialogAddNotes.value = false;
+
+      createDialog.value = false;
     };
-    const editNote = () => {
-      if (editingNoteIndex.value !== -1) {
-        rows.value[editingNoteIndex.value].notes = input.value.notes;
-        rows.value[editingNoteIndex.value].created_by = input.value.created_by;
-        dialogEditNote.value = false;
+
+    // Mengedit Data
+    const editDialog = (data: dataType) => {
+      input.value.name = data.name;
+      input.value.area = data.area;
+
+      dataTable.value = rows.value.findIndex((x) => data.id === x.id);
+      dialogEdit.value = true;
+    };
+
+    const editData = () => {
+      if (dataTable.value !== -1) {
+        rows.value[dataTable.value].name = input.value.name;
+        rows.value[dataTable.value].area = input.value.area;
+      }
+
+      dialogEdit.value = false;
+    };
+
+    // Menghapus Data
+    const deleteDialog = (data: dataType) => {
+      dataTable.value = rows.value.findIndex((x) => data.id === x.id);
+
+      dialogDelete.value = true;
+    };
+
+    const deleteData = () => {
+      if (dataTable.value !== -1) {
+        rows.value.splice(dataTable.value, 1);
+        dialogDelete.value = false;
       }
     };
-    const deleteNote = () => {
-      if (editingNoteIndex.value !== -1) {
-        rows.value.splice(editingNoteIndex.value, 1);
-        dialogDeleteNote.value = false;
-      }
-    };
+
     return {
       columns,
       rows,
-      dialogAddNotes,
-      dialogEditNote,
-      dialogDeleteNote,
+      createDialog,
       input,
-      editingNote,
-      editingNoteIndex,
-      openAddDialog,
-      openEditDialog,
-      openDeleteDialog,
-      addNotes,
-      editNote,
-      deleteNote,
+      addData,
+      editDialog,
+      dialogEdit,
+      editData,
+      dialogDelete,
+      deleteData,
+      deleteDialog,
     };
   },
 });
 </script>
-
-<style scoped>
-/* tambahkan styling sesuai kebutuhan */
-</style>
