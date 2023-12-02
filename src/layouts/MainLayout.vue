@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-header elevated class="bg-primary">
+    <q-header elevated transparent>
       <q-toolbar>
         <q-btn
           flat
@@ -11,9 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
-          {{ $t('title') }}
-        </q-toolbar-title>
+        <q-toolbar-title>Hotel</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -26,7 +24,6 @@
         />
       </q-list>
     </q-drawer>
-    >>>>>>> dev
 
     <q-page-container>
       <router-view />

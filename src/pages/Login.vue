@@ -1,26 +1,50 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <q-card class="q-pa-md" style="width: 400px; max-width: 80vw">
-      <div class="text-h6 text-center q-mb-md">Login Form</div>
+  <q-page
+    class="row items-center justify-evenly"
+    style="
+      background: linear-gradient(
+        247.13deg,
+        rgba(95, 208, 56, 0.69) 24.43%,
+        rgba(255, 255, 255, 0) 100%
+      );
+    "
+  >
+    <div class="col-6 text-center">
+      <q-img src="~assets/login.png" transtition="fade" style="width: 300px" />
+    </div>
 
-      <!-- Tambahkan formulir login di sini -->
-      <q-form @submit="login">
-        <q-input v-model="username" dense outlined label="Username" />
-        <br />
+    <div class="col-6 d-flex justify-center">
+      <q-card class="q-pa-md" style="width: 400px; max-width: 80vw">
+        <div class="text-h6 text-center q-mb-md">Login Form</div>
+        <!-- Form Input -->
+        <q-form @submit="login">
+          <q-input v-model="username" dense outlined label="Username" />
+          <br />
 
-        <q-input
-          v-model="password"
-          dense
-          outlined
-          type="password"
-          label="Password"
-        />
-        <br />
+          <q-input
+            v-model="password"
+            dense
+            outlined
+            type="password"
+            label="Password"
+          />
+          <br />
 
-        <q-btn color="primary" label="Login" to="/dashboard" />
-        <q-btn label="Register" class="q-mx-sm" to="/register" />
-      </q-form>
-    </q-card>
+          <q-btn
+            color="primary"
+            label="Login"
+            to="/dashboard"
+            class="q-mb-md"
+            style="width: 100%"
+          />
+          <br />
+          <q-p block>
+            Don't have an account yet?
+            <a href="/register" style="text-decoration: none">Register Now</a>
+          </q-p>
+        </q-form>
+      </q-card>
+    </div>
   </q-page>
 </template>
 
